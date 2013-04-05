@@ -38,15 +38,15 @@ public class DocHiveToolbox {
 		// create the output directory corresponding to the file
 		boolean status;
 		int pageCount = 0;
-		status = new File(directoryLocation + "//" + woext).mkdir();
+		status = new File(directoryLocation + File.separator + woext).mkdir();
         report(status);
 
         if(status) {
 			// execute separation
-			runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -monochrome -density 300 " + sourceFile + " " + directoryLocation + "\\" + woext + "\\" + woext + "_%02d.png");
+			runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -monochrome -density 300 " + sourceFile + " " + directoryLocation + File.separator + woext + File.separator + woext + "_%02d.png");
 		}
 		// return the number of files in the [input\fileName] directory
-	  	pageCount = new File(directoryLocation + "\\" + woext).listFiles().length;
+		pageCount = new File(directoryLocation + File.separator + woext).listFiles().length;
 	  	return pageCount;
   	} // end [separateDocumentPages(String fileName, String directoryLocation)]
 

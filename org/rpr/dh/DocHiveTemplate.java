@@ -142,7 +142,7 @@ public class DocHiveTemplate{
 								if(searching) {
 									if(requirement.equals(accumulate.trim())) {
 										templateName = listOfFiles[i].getName();
-										//runtimeExecuteAndWait("encountered.bat Template: "+"templates\\"+files);
+										//runtimeExecuteAndWait("encountered.bat Template: "+"templates"+File.separator+files);
 										searching=false;
 										templateIdentified = true;
 										return templateIdentified;
@@ -216,7 +216,7 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -trim -fuzz \"5%\" +repage "+
+		runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -trim -fuzz 5% +repage "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName_woext+"_trim.png");
 
