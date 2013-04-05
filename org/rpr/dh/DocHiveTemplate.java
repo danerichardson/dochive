@@ -19,17 +19,17 @@ public class DocHiveTemplate{
 	private int pageY;
 
 	//-----------------------------------------------------
-  	// Constructor- Initialize the class
-  	//-----------------------------------------------------
+	// Constructor- Initialize the class
+	//-----------------------------------------------------
   	DocHiveTemplate(String location) {
 		templateLocation = location;
-  	} // end [DocHiveTemplate()]
+	}
 
 
-  	//-----------------------------------------------------
-  	// Description: Determine if a template exists for the
-  	// given file and return true on success.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Determine if a template exists for the
+	// given file and return true on success.
+	//-----------------------------------------------------
   	boolean templateExistFor(String fileName, String destinationDirectory){
 
 		templateIdentified = false;
@@ -60,11 +60,9 @@ public class DocHiveTemplate{
 
 		try {
 
-			//String files;
 			File folder = new File(templateLocation);
 	  		File[] listOfFiles = folder.listFiles();
 
-	  		// record start time
 			long startTime = System.currentTimeMillis();
 
 	  		// loop through all the files in templateDirectory
@@ -180,23 +178,22 @@ public class DocHiveTemplate{
 		}
 
 		return templateIdentified;
-  	} // end [boolean templateExistFor(String fileName)]
+	}
 
-
-  	//-----------------------------------------------------
-  	// Description: Retrieve the template name matching
-  	// the file.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Retrieve the template name matching
+	// the file.
+	//-----------------------------------------------------
   	String getTemplateName(){
 		return templateName;
-  	} // end [String getTemplateName()]
+	}
 
 
-  	//-----------------------------------------------------
-  	// Description: Determine the rotation of the png file
-  	// and rotate it whereby the side edge is 90 degrees.
-  	// Return the angle of rotation.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Determine the rotation of the png file
+	// and rotate it whereby the side edge is 90 degrees.
+	// Return the angle of rotation.
+	//-----------------------------------------------------
   	double autoAlignRotate(String fileName, String destinationDirectory){
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
@@ -206,24 +203,24 @@ public class DocHiveTemplate{
 		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName);
 
 	  	return 0.0;
-  	} // end [autoAlignRotate(String fileName)]
+	}
 
 
-  	//-----------------------------------------------------
-  	// Description: Determine the unique point of alignment
-  	// for the file specified by fileName.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Determine the unique point of alignment
+	// for the file specified by fileName.
+	//-----------------------------------------------------
   	void determinePagePointOfAlignment(String fileName, String destinationDirectory){
 		pageX = 0;
 		pageY = 0;
-  	} // end [determinePagePointOfAlignment(String fileName)]
+	}
 
 
-  	//-----------------------------------------------------
-  	// Description: Normalize the file to have the origin
-  	// be the top left of the form non white space. We
-  	// are gettting rid of the whitespace borders.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Normalize the file to have the origin
+	// be the top left of the form non white space. We
+	// are gettting rid of the whitespace borders.
+	//-----------------------------------------------------
   	void normalizeByTrimming(String fileName, String destinationDirectory){
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
@@ -234,10 +231,10 @@ public class DocHiveTemplate{
 
 		pageX = 0;
 		pageY = 0;
-  	} // end [normalizeByTrimming(String fileName, String destinationDirectory)]
+	}
 
 
-    //-----------------------------------------------------
+	//-----------------------------------------------------
 	// Description: Get the value from the node.
 	// YUUGAMEE!
 	//-----------------------------------------------------
@@ -246,10 +243,10 @@ public class DocHiveTemplate{
 		Node nValue = (Node) nlList.item(0);
 
 		return nValue.getNodeValue();
-	} // end [getTagValue(String sTag, Element eElement)]
+	}
 
 
-    //-----------------------------------------------------
+	//-----------------------------------------------------
 	// Description: Read the text from the file.
 	// AHHGAYUU!
 	//-----------------------------------------------------
@@ -327,22 +324,22 @@ public class DocHiveTemplate{
 		}
 		return "";
 
-  	} // end [interpretText(String destinationDirectory, String fileName_woext, String suffix)]
+	}
 
-  	//-----------------------------------------------------
-  	// Description: Return true if the character is numeric
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Return true if the character is numeric
+	//-----------------------------------------------------
 	boolean isNumber(char x){
 		if(x < '0') return false;
 		if(x > '9') return false;
 		return true;
 	}
 
-  	//-----------------------------------------------------
-  	// Description: Using the specified template, extract
-  	// the template sections into PNG and TXT corresponding
-  	// parts.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Using the specified template, extract
+	// the template sections into PNG and TXT corresponding
+	// parts.
+	//-----------------------------------------------------
   	void extractWithTemplate(String templateName, String fileName, String destinationDirectory){
 
 		// from template
@@ -430,13 +427,13 @@ public class DocHiveTemplate{
 			e.printStackTrace();
 		}
 
-  	} // end [extractWithTemplate(...)]
+	}
 
 
-  	//-----------------------------------------------------
-  	// Description: Using the specified template, create
-  	// csv records corresponding to the output xml criteria.
-  	//-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: Using the specified template, create
+	// csv records corresponding to the output xml criteria.
+	//-----------------------------------------------------
   	void transformWithTemplate(String templateName, String fileName, Boolean bOptionalIdentifier, String optionalIdentifier, String destinationDirectory){
 
 		System.out.println("fileName = " + fileName);
@@ -499,5 +496,5 @@ public class DocHiveTemplate{
 			e.printStackTrace();
 		}
 
-  	} // end [transformWithTemplate(...)]
+	}
 }

@@ -10,10 +10,10 @@ import java.io.File;
 
 public class DocHive{
 
-    //-----------------------------------------------------
-    // Description: This application will convert a multipage
-    // document into it's csv content. This is the entry point.
-    //-----------------------------------------------------
+	//-----------------------------------------------------
+	// Description: This application will convert a multipage
+	// document into its csv content. This is the entry point.
+	//-----------------------------------------------------
     public static void main(String args[]){
 
 		String absolutePath;
@@ -46,33 +46,31 @@ public class DocHive{
 		}
 
 		//-------------------------------------------------
-	    // now we have the parameters, lets separate the
-	    // source file into separate PNG pages
-    	//-------------------------------------------------
+		// now we have the parameters, lets separate the
+		// source file into separate PNG pages
+		//-------------------------------------------------
 
-	  	// initialize toolbox (rotation, alignment)
+		// initialize toolbox (rotation, alignment)
 	  	DocHiveToolbox tools = new DocHiveToolbox();
 
-	  	// pages in current document
+		// pages in current document
 	  	int index = temp.getName().lastIndexOf('.');
 		String fileName = temp.getName();
 		String woext = temp.getName().substring(0, index);
 
-		// record separation start time
 		long sepStartTime = System.currentTimeMillis();
 		int pageCount = tools.separateDocumentPages(Settings.sourceFile, fileName, woext, Settings.destinationDirectory);
 
-		// record separation end time
 		long sepEndTime = System.currentTimeMillis();
 		System.out.println("Converted in " + (sepEndTime - sepStartTime)/1000 + " seconds");
 
 		//-------------------------------------------------
-	    // we have separated all the pages into PNG files.
-	    // now we can align them (if asked for), find the
-	    // point of reference and template for each file.
-	    // finally, convert the PNG file into one or more
-	    // CSV lines
-    	//-------------------------------------------------
+		// we have separated all the pages into PNG files.
+		// now we can align them (if asked for), find the
+		// point of reference and template for each file.
+		// finally, convert the PNG file into one or more
+		// CSV lines
+		//-------------------------------------------------
 
 	  	double rotate;
 	  	String files;
@@ -82,16 +80,15 @@ public class DocHive{
 
 		System.out.println("Page Count: " + pageCount);
 
-	    // only continue if pages exist
+		// only continue if pages exist
 	  	if(pageCount>0) {
 
-			// record start time
 			long startTime = System.currentTimeMillis();
 
-		  	// loop through all the files in destinationDirectory
+			// loop through all the files in destinationDirectory
 			for (int i = 0; i < listOfFiles.length; i++) {
 
-				// ensure it is not a file
+				// ensure it is a file
 		  		if (listOfFiles[i].isFile()) {
 
 		     		String afile = listOfFiles[i].getName();
@@ -114,11 +111,11 @@ public class DocHive{
 						// auto rotate file
 					    if(Settings.bAutoAlign) rotate = dhTemplate.autoAlignRotate(afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
 
-					    // trim/normalize form
+						// trim/normalize form
 					    dhTemplate.normalizeByTrimming(afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
-					    // dhTemplate.determinePagePointOfAlignment(afile, Settings.destinationDirectory);
+						// dhTemplate.determinePagePointOfAlignment(afile, Settings.destinationDirectory);
 
-					    // determine if a template exists for the file
+						// determine if a template exists for the file
 					    templateAvailable = false;
 					    templateAvailable = dhTemplate.templateExistFor(afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
 
@@ -126,39 +123,36 @@ public class DocHive{
 						System.out.println("-------------------------------------------------------------------");
 						System.out.println(templateAvailable ? "success" : "unexpected opportunity");
 
-					    // use template to extract information
+						// use template to extract information
 					    if(templateAvailable) {
 
 							// yo, mark page as having a template ************************************************************
 
-						    // get current template name
+							// get current template name
  						    String templateName = dhTemplate.getTemplateName();
 							System.out.println("Template ["+templateName+"] selected for ["+afile+"]");
 
-						    // use the template to extract pieces
+							// use the template to extract pieces
 							dhTemplate.extractWithTemplate(templateName, afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
 
-						    // convert the pieces into a csv file
+							// convert the pieces into a csv file
 							dhTemplate.transformWithTemplate(templateName, afile, Settings.bOptionalIdentifier, Settings.optionalIdentifier, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
 
-					    } // end [if(templateAvailable)]
+					    }
 					    else {
 
 							// mark page as not having a template + new method needed ****************************************
 						}
 
-		            } // end [if (files.toUpperCase().endsWith(".PNG"))]
+					}
 
-		   		} // end [if (listOfFiles[i].isFile())]
+				}
 
-			} // end [for (int i = 0; i < listOfFiles.length; i++)]
+			}
 
-			// record end time
 			long endTime = System.currentTimeMillis();
 			System.out.println("Converted in " + (endTime - startTime)/1000 + " seconds");
+		}
+	}
+}
 
-	  	} // end [if(pageCount>0)]
-
-    } // end [main(String args[])]
-
-} // end [class DocHive]

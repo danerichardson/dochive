@@ -4,7 +4,7 @@ import java.io.*;
 
 //---------------------------------------------------------
 // This class reads an input stream in an extra thread.
-// This is used for running external programms out of java
+// This is used for running external programs out of java
 // so that stdout and stderr are not blocking the process
 // from work. If the stream is closed by Runtime the
 // gobbler will also die. Poor dead gobbler.
@@ -15,7 +15,7 @@ class StreamGobbler extends Thread
   String type;
 
   //-------------------------------------------------------
-  // Ititialize
+  // Initialize
   //-------------------------------------------------------
   StreamGobbler(InputStream is, String type)
   {
@@ -40,3 +40,4 @@ class StreamGobbler extends Thread
     }
   }
 }
+
