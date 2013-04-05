@@ -108,9 +108,9 @@ public class DocHiveTemplate{
 							viaTemplatePlusWidth	= viaTemplateX + intWidth;
 							viaTemplatePlusHeight	= viaTemplateY + intHeight;
 
-							runtimeExecuteAndWait("convert.bat "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
-							runtimeExecuteAndWait("draw.bat "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
-							runtimeExecuteAndWait("tesseract.bat "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
+							runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
+							runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
+							runtimeExecuteAndWait(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
 
 							String line = ""; 	// String that holds current file line
 							String accumulate = "";
@@ -189,7 +189,7 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		runtimeExecuteAndWait("convert.bat -deskew 40% +repage "+
+		runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -deskew 40% +repage "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName);
 
@@ -216,7 +216,7 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		runtimeExecuteAndWait("convert.bat -trim -fuzz \"5%\" +repage "+
+		runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -trim -fuzz \"5%\" +repage "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName_woext+"_trim.png");
 
@@ -393,9 +393,9 @@ public class DocHiveTemplate{
 					viaTemplatePlusWidth	= viaTemplateX + intWidth;
 					viaTemplatePlusHeight	= viaTemplateY + intHeight;
 
-					runtimeExecuteAndWait("convert.bat "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
-					runtimeExecuteAndWait("draw.bat "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
-					runtimeExecuteAndWait("tesseract.bat "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
+					runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
+					runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
+					runtimeExecuteAndWait(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
 				}
 			}
 

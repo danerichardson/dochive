@@ -43,7 +43,7 @@ public class DocHiveToolbox {
 
         if(status) {
 			// execute separation
-			runtimeExecuteAndWait("convert.bat -monochrome -density 300 " + sourceFile + " " + directoryLocation + "\\" + woext + "\\" + woext + "_%02d.png");
+			runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -monochrome -density 300 " + sourceFile + " " + directoryLocation + "\\" + woext + "\\" + woext + "_%02d.png");
 		}
 		// return the number of files in the [input\fileName] directory
 	  	pageCount = new File(directoryLocation + "\\" + woext).listFiles().length;
