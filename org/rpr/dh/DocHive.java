@@ -121,7 +121,7 @@ public class DocHive{
 
 
 						System.out.println("-------------------------------------------------------------------");
-						System.out.println(templateAvailable ? "success" : "unexpected opportunity");
+						System.out.println(templateAvailable ? "success" : "failure");
 
 						// use template to extract information
 					    if(templateAvailable) {

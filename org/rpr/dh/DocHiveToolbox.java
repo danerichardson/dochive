@@ -23,7 +23,7 @@ public class DocHiveToolbox {
 	// boolean state.
 	//-----------------------------------------------------
 	void report(boolean b) {
-	    System.out.println(b ? "success" : "unexpected opportunity");
+	    System.out.println(b ? "success" : "failure");
     }
 
 
