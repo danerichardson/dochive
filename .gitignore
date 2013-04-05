@@ -1,0 +1,14 @@
+
+# Executables
+bin/DocHive.jar
+
+# Test output
+output/
+
+# Compile things
+*.class
+
+# Editor things
+*~
+.*.swp
+*.out
