@@ -108,9 +108,9 @@ public class DocHiveTemplate{
 							viaTemplatePlusWidth	= viaTemplateX + intWidth;
 							viaTemplatePlusHeight	= viaTemplateY + intHeight;
 
-							runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
-							runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
-							runtimeExecuteAndWait(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
+							Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
+							Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
+							Spawn.execute(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
 
 							String line = ""; 	// String that holds current file line
 							String accumulate = "";
@@ -142,13 +142,13 @@ public class DocHiveTemplate{
 								if(searching) {
 									if(requirement.equals(accumulate.trim())) {
 										templateName = listOfFiles[i].getName();
-										//runtimeExecuteAndWait("encountered.bat Template: "+"templates"+File.separator+files);
+										//Spawn.execute("encountered.bat Template: "+"templates"+File.separator+files);
 										searching=false;
 										templateIdentified = true;
 										return templateIdentified;
 							  	  	}
 									else {
-										//runtimeExecuteAndWait("encountered.bat - "+accumulate.trim()+" "+suffix);
+										//Spawn.execute("encountered.bat - "+accumulate.trim()+" "+suffix);
 								  	  	templateIdentified = false;
 										searching=true;
 									}
@@ -189,7 +189,7 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -deskew 40% +repage "+
+		Spawn.execute(Settings.Programs.CONVERT.path()+" -deskew 40% +repage "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName);
 
@@ -216,7 +216,7 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -trim -fuzz 5% +repage "+
+		Spawn.execute(Settings.Programs.CONVERT.path()+" -trim -fuzz 5% +repage "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
 			destinationDirectory+File.separator+fileName_woext+File.separator+fileName_woext+"_trim.png");
 
@@ -393,9 +393,9 @@ public class DocHiveTemplate{
 					viaTemplatePlusWidth	= viaTemplateX + intWidth;
 					viaTemplatePlusHeight	= viaTemplateY + intHeight;
 
-					runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
-					runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
-					runtimeExecuteAndWait(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
+					Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
+					Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
+					Spawn.execute(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
 				}
 			}
 
@@ -473,36 +473,4 @@ public class DocHiveTemplate{
 		}
 
   	} // end [transformWithTemplate(...)]
-
-
-  	//-----------------------------------------------------
-  	// Description: via StreamGobbler, execute an external
-  	// command and wait for it to finish executing.
-  	//-----------------------------------------------------
-    void runtimeExecuteAndWait(String cmd){
-    	try {
-			Runtime rt = Runtime.getRuntime();
-			System.out.println("Executing: " + cmd);
-			Process proc = rt.exec(cmd);
-
-			// any error message?
-			StreamGobbler errorGobbler = new
-			StreamGobbler(proc.getErrorStream(), "ERROR");
-
-			// any output?
-			StreamGobbler outputGobbler = new
-			StreamGobbler(proc.getInputStream(), "OUTPUT");
-
-			// kick them off
-			errorGobbler.start();
-			outputGobbler.start();
-
-			// any error???
-			int exitVal = proc.waitFor();
-			System.out.println("ExitValue: " + exitVal);
-
-      	} catch (Throwable t){
-			t.printStackTrace();
-	  	}
-    } // end [runtimeExecuteAndWait(String cmd)]
 }

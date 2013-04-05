@@ -43,43 +43,10 @@ public class DocHiveToolbox {
 
         if(status) {
 			// execute separation
-			runtimeExecuteAndWait(Settings.Programs.CONVERT.path()+" -monochrome -density 300 " + sourceFile + " " + directoryLocation + File.separator + woext + File.separator + woext + "_%02d.png");
+			Spawn.execute(Settings.Programs.CONVERT.path()+" -monochrome -density 300 " + sourceFile + " " + directoryLocation + File.separator + woext + File.separator + woext + "_%02d.png");
 		}
 		// return the number of files in the [input\fileName] directory
 		pageCount = new File(directoryLocation + File.separator + woext).listFiles().length;
 	  	return pageCount;
   	} // end [separateDocumentPages(String fileName, String directoryLocation)]
-
-
-  	//-----------------------------------------------------
-  	// Description: via StreamGobbler, execute an external
-  	// command and wait for it to finish executing.
-  	//-----------------------------------------------------
-    void runtimeExecuteAndWait(String cmd){
-    	try {
-			Runtime rt = Runtime.getRuntime();
-			System.out.println("Executing: " + cmd);
-			Process proc = rt.exec(cmd);
-
-			// any error message?
-			StreamGobbler errorGobbler = new
-			StreamGobbler(proc.getErrorStream(), "ERROR");
-
-			// any output?
-			StreamGobbler outputGobbler = new
-			StreamGobbler(proc.getInputStream(), "OUTPUT");
-
-			// kick them off
-			errorGobbler.start();
-			outputGobbler.start();
-
-			// any error???
-			int exitVal = proc.waitFor();
-			System.out.println("ExitValue: " + exitVal);
-
-      	} catch (Throwable t){
-			t.printStackTrace();
-	  	}
-    } // end [runtimeExecuteAndWait(String cmd)]
-
 } // end [class DocHiveToolbox]
