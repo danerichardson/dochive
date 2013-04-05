@@ -1,8 +1,8 @@
 #!/bin/sh
 
-rm app/DocHive.jar
+rm -f bin/DocHive.jar
 
 javac org/rpr/dh/*.java
-jar cfm app/DocHive.jar org/rpr/dh/Manifest.txt org/rpr/dh/*.class
+jar cfm bin/DocHive.jar org/rpr/dh/Manifest.txt org/rpr/dh/*.class
 rm org/rpr/dh/*.class
 
