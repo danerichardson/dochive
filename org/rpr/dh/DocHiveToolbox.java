@@ -43,7 +43,11 @@ public class DocHiveToolbox {
 
         if(status) {
 			// execute separation
-			Spawn.execute(Settings.Programs.CONVERT.path()+" -monochrome -density 300 " + sourceFile + " " + directoryLocation + File.separator + woext + File.separator + woext + "_%02d.png");
+			Spawn.execute(Settings.Programs.CONVERT.path(),
+			              "-monochrome",
+			              "-density", "300",
+			              sourceFile,
+			              directoryLocation + File.separator + woext + File.separator + woext + "_%02d.png");
 		}
 		// return the number of files in the [input\fileName] directory
 		pageCount = new File(directoryLocation + File.separator + woext).listFiles().length;

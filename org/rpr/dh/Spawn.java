@@ -5,10 +5,14 @@ class Spawn {
 	// Description: via StreamGobbler, execute an external
 	// command and wait for it to finish executing.
 	//-----------------------------------------------------
-	public static void execute(String cmd) {
+	public static void execute(String... cmd) {
   		try {
 			Runtime rt = Runtime.getRuntime();
-			System.out.println("Executing: " + cmd);
+			System.out.print("Executing: " + cmd[0]);
+			for (int i = 1; i < cmd.length; i++) {
+				System.out.format(" \"%s\"", cmd[i]);
+			}
+			System.out.println();
 			Process proc = rt.exec(cmd);
 
 			// any error message?

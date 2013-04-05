@@ -108,9 +108,23 @@ public class DocHiveTemplate{
 							viaTemplatePlusWidth	= viaTemplateX + intWidth;
 							viaTemplatePlusHeight	= viaTemplateY + intHeight;
 
-							Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
-							Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
-							Spawn.execute(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
+							Spawn.execute(Settings.Programs.CONVERT.path(),
+							              pathPlusFileName_woext+"_trim.png",
+							              "-crop", String.format("%dx%d+%d+%d", intWidth, intHeight, viaTemplateX, viaTemplateY),
+							              "+repage",
+							              pathPlusFileName_woext+"_"+mySuffix+".png");
+							Spawn.execute(Settings.Programs.CONVERT.path(),
+							              pathPlusFileName_woext+"_trim.png",
+							              "-fill", "none",
+							              "-stroke", "red",
+							              "-strokewidth", "3",
+							              "-draw", String.format("rectangle %d,%d %d,%d",
+							                                     viaTemplateX, viaTemplateY, viaTemplatePlusWidth, viaTemplatePlusHeight),
+							              "+repage",
+							              pathPlusFileName_woext+"_draw.png");
+							Spawn.execute(Settings.Programs.TESSERACT.path(),
+							              pathPlusFileName_woext+"_"+mySuffix+".png",
+							              pathPlusFileName_woext+"_"+mySuffix+".txt");
 
 							String line = ""; 	// String that holds current file line
 							String accumulate = "";
@@ -142,13 +156,11 @@ public class DocHiveTemplate{
 								if(searching) {
 									if(requirement.equals(accumulate.trim())) {
 										templateName = listOfFiles[i].getName();
-										//Spawn.execute("encountered.bat Template: "+"templates"+File.separator+files);
 										searching=false;
 										templateIdentified = true;
 										return templateIdentified;
 							  	  	}
 									else {
-										//Spawn.execute("encountered.bat - "+accumulate.trim()+" "+suffix);
 								  	  	templateIdentified = false;
 										searching=true;
 									}
@@ -189,9 +201,9 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		Spawn.execute(Settings.Programs.CONVERT.path()+" -deskew 40% +repage "+
-			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
-			destinationDirectory+File.separator+fileName_woext+File.separator+fileName);
+		Spawn.execute(Settings.Programs.CONVERT.path(), "-deskew", "40%", "+repage",
+		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName,
+		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName);
 
 	  	return 0.0;
   	} // end [autoAlignRotate(String fileName)]
@@ -216,9 +228,9 @@ public class DocHiveTemplate{
 
 		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
 
-		Spawn.execute(Settings.Programs.CONVERT.path()+" -trim -fuzz 5% +repage "+
-			destinationDirectory+File.separator+fileName_woext+File.separator+fileName+" "+
-			destinationDirectory+File.separator+fileName_woext+File.separator+fileName_woext+"_trim.png");
+		Spawn.execute(Settings.Programs.CONVERT.path(), "-trim", "-fuzz", "5%", "+repage",
+		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName,
+		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName_woext+"_trim.png");
 
 		pageX = 0;
 		pageY = 0;
@@ -393,9 +405,24 @@ public class DocHiveTemplate{
 					viaTemplatePlusWidth	= viaTemplateX + intWidth;
 					viaTemplatePlusHeight	= viaTemplateY + intHeight;
 
-					Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png -crop "+intWidth+"x"+intHeight+"+"+viaTemplateX+"+"+viaTemplateY+" +repage "+pathPlusFileName_woext+"_"+mySuffix+".png");
-					Spawn.execute(Settings.Programs.CONVERT.path()+" "+pathPlusFileName_woext+"_trim.png"+" -fill none -stroke red -strokewidth 3 -draw \"rectangle "+viaTemplateX+","+viaTemplateY+" "+viaTemplatePlusWidth+","+viaTemplatePlusHeight+"\" +repage "+pathPlusFileName_woext+"_trim.png");
-					Spawn.execute(Settings.Programs.TESSERACT.path()+" "+pathPlusFileName_woext+"_"+mySuffix+".png "+pathPlusFileName_woext+"_"+mySuffix+".txt");
+					Spawn.execute(Settings.Programs.CONVERT.path(),
+					              pathPlusFileName_woext+"_trim.png",
+					              "-crop", String.format("%dx%d+%d+%d", intWidth, intHeight, viaTemplateX, viaTemplateY),
+					              "+repage",
+					              pathPlusFileName_woext+"_"+mySuffix+".png");
+					Spawn.execute(Settings.Programs.CONVERT.path(),
+					              pathPlusFileName_woext+"_trim.png",
+					              "-fill", "none",
+					              "-stroke", "red",
+					              "-strokewidth", "3",
+					              "-draw", String.format("rectangle %d,%d %d,%d",
+					                                     viaTemplateX, viaTemplateY,
+					                                     viaTemplatePlusWidth, viaTemplatePlusHeight),
+					              "+repage",
+					              pathPlusFileName_woext+"_draw.png");
+					Spawn.execute(Settings.Programs.TESSERACT.path(),
+					              pathPlusFileName_woext+"_"+mySuffix+".png",
+					              pathPlusFileName_woext+"_"+mySuffix+".txt");
 				}
 			}
 
