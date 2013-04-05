@@ -1,8 +1,16 @@
+DocHive
+=======
+
 More documentatin will be coming soon. 
 
-DocHive has 2 prerequisites, ImageMagic and Tesseract.
+DocHive has 2 prerequisites, ImageMagick and Tesseract.
 
-Install both of these, for command line use, and update 
+Compile Instructions
+--------------------
+
+### Windows
+
+Install both prerequisites, for command line use, and update
 
 (1) bin\convert.bat
 (2) bin\tesseract.bat
@@ -14,3 +22,14 @@ or
 "%PROGRAMFILES%\Tesseract-OCR\tesseract"
 
 Compile the java program by executing compile.bat
+
+Run a test with runtest.bat
+
+### Linux
+
+Install both prerequisites
+
+Compile the java program by executing compile.sh
+
+Run a test with runtest.sh
+
