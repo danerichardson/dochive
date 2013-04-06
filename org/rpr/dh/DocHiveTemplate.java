@@ -116,13 +116,13 @@ public class DocHiveTemplate{
 							              pathPlusFileName_woext+"_draw.png");
 							Spawn.execute(Settings.Programs.TESSERACT.path(),
 							              pathPlusFileName_woext+"_"+mySuffix+".png",
-							              pathPlusFileName_woext+"_"+mySuffix+".txt");
+							              pathPlusFileName_woext+"_"+mySuffix);
 
 							String line = ""; 	// String that holds current file line
 							String accumulate = "";
 
 							try {
-								FileReader input = new FileReader(pathPlusFileName_woext+"_"+mySuffix+".png.txt");
+								FileReader input = new FileReader(pathPlusFileName_woext+"_"+mySuffix+".txt");
 								BufferedReader bufRead = new BufferedReader(input);
 
 								line = bufRead.readLine();
@@ -253,7 +253,7 @@ public class DocHiveTemplate{
 		int dataType = 1; // For current testing
 
 		try {
-			File file = new File(destinationDirectory + File.separator + fileName_woext + File.separator + fileName_woext + "_" + suffix + ".png.txt");
+			File file = new File(destinationDirectory + File.separator + fileName_woext + File.separator + fileName_woext + "_" + suffix + ".txt");
 
 			reader = new Scanner(new FileReader(file));
 			String text = null;
@@ -411,7 +411,7 @@ public class DocHiveTemplate{
 					              pathPlusFileName_woext+"_draw.png");
 					Spawn.execute(Settings.Programs.TESSERACT.path(),
 					              pathPlusFileName_woext+"_"+mySuffix+".png",
-					              pathPlusFileName_woext+"_"+mySuffix+".txt");
+					              pathPlusFileName_woext+"_"+mySuffix);
 				}
 			}
 
