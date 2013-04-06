@@ -283,7 +283,7 @@ public class DocHiveTemplate{
 					int hi = temp.length()-index;
 					char[] chars = temp.toCharArray();
 					for(i=hi ; i>0 ; i--){
-						if(isNumber(chars[i]))
+						if(Character.isDigit(chars[i]))
 							break;
 					}
 
@@ -310,15 +310,6 @@ public class DocHiveTemplate{
 		}
 		return "";
 
-	}
-
-	//-----------------------------------------------------
-	// Description: Return true if the character is numeric
-	//-----------------------------------------------------
-	boolean isNumber(char x){
-		if(x < '0') return false;
-		if(x > '9') return false;
-		return true;
 	}
 
 	//-----------------------------------------------------
