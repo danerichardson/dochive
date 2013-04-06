@@ -50,12 +50,9 @@ public class DocHiveTemplate{
 		int viaTemplatePlusWidth	= 0;
 		int viaTemplatePlusHeight	= 0;
 
-		String fileName_woext 			= fileName.substring(0,fileName.lastIndexOf("."));
-		String pathPlusFileName 		= destinationDirectory+
-										  File.separator+fileName.substring(0,fileName.lastIndexOf("."))+
-										  File.separator+fileName;
+		String fileName_woext 			= fileName.substring(0,fileName.lastIndexOf('.'));
 		String pathPlusFileName_woext 	= destinationDirectory+
-										  File.separator+fileName.substring(0,fileName.lastIndexOf("."))+
+										  File.separator+fileName_woext+
 										  File.separator+fileName_woext;
 
 		try {
@@ -65,18 +62,15 @@ public class DocHiveTemplate{
 
 			long startTime = System.currentTimeMillis();
 
-	  		// loop through all the files in templateDirectory
-			for (int i = 0; i < listOfFiles.length; i++) {
+			for (File file : listOfFiles) {
 
-				// ensure it is a file
-		  		if (listOfFiles[i].isFile()) {
+				if (file.isFile()) {
 
 					templateName = "";
 
-					File fXmlFile = new File(templateLocation+File.separator+listOfFiles[i].getName());
 					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-					Document doc = dBuilder.parse(fXmlFile);
+					Document doc = dBuilder.parse(file);
 					doc.getDocumentElement().normalize();
 
 					System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
@@ -153,7 +147,7 @@ public class DocHiveTemplate{
 							for (String requirement : requirements) {
 								if(searching) {
 									if(requirement.equals(accumulate.trim())) {
-										templateName = listOfFiles[i].getName();
+										templateName = file.getName();
 										searching=false;
 										templateIdentified = true;
 										return templateIdentified;
@@ -196,7 +190,7 @@ public class DocHiveTemplate{
 	//-----------------------------------------------------
   	double autoAlignRotate(String fileName, String destinationDirectory){
 
-		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
+		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf('.')));
 
 		Spawn.execute(Settings.Programs.CONVERT.path(), "-deskew", "40%", "+repage",
 		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName,
@@ -223,7 +217,7 @@ public class DocHiveTemplate{
 	//-----------------------------------------------------
   	void normalizeByTrimming(String fileName, String destinationDirectory){
 
-		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf(".")));
+		String fileName_woext = (fileName.substring(0,fileName.lastIndexOf('.')));
 
 		Spawn.execute(Settings.Programs.CONVERT.path(), "-trim", "-fuzz", "5%", "+repage",
 		              destinationDirectory+File.separator+fileName_woext+File.separator+fileName,
@@ -359,15 +353,13 @@ public class DocHiveTemplate{
 		int viaTemplatePlusHeight	= 0;
 
 		System.out.println("fileName = " + fileName);
-		int index = fileName.lastIndexOf(File.separator);
-		String pathPlusFileName = destinationDirectory+File.separator+fileName.substring(0,fileName.lastIndexOf("."))+File.separator+fileName;
-		System.out.println("pathPlusFileName = " + pathPlusFileName);
-		String pathPlusFileName_woext = (pathPlusFileName.substring(0,pathPlusFileName.lastIndexOf(".")));
+		String fileName_woext = fileName.substring(0, fileName.lastIndexOf('.'));
+		String pathPlusFileName_woext = destinationDirectory+File.separator+fileName_woext+File.separator+fileName_woext;
 		System.out.println("pathPlusFileName_woext = " + pathPlusFileName_woext);
 
 		try {
 
-			File fXmlFile = new File(templateLocation+File.separator+templateName);
+			File fXmlFile = new File(templateLocation, templateName);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -437,17 +429,10 @@ public class DocHiveTemplate{
   	void transformWithTemplate(String templateName, String fileName, Boolean bOptionalIdentifier, String optionalIdentifier, String destinationDirectory){
 
 		System.out.println("fileName = " + fileName);
-		int index = fileName.lastIndexOf(File.separator);
-		//System.out.println("pathPlusFileName = " + pathPlusFileName);
-		String pathPlusFileName = destinationDirectory+File.separator+fileName.substring(0,fileName.lastIndexOf("."))+File.separator+fileName;
-		System.out.println("pathPlusFileName = " + pathPlusFileName);
-		String pathPlusFileName_woext = (pathPlusFileName.substring(0,pathPlusFileName.lastIndexOf(".")));
-		System.out.println("pathPlusFileName_woext = " + pathPlusFileName_woext);
-		String fileName_woext = fileName.substring(0,fileName.lastIndexOf("."));
-
+		String fileName_woext = fileName.substring(0,fileName.lastIndexOf('.'));
 
 		try {
-			File fXmlFile = new File(templateLocation+File.separator+templateName);
+			File fXmlFile = new File(templateLocation, templateName);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
@@ -465,7 +450,7 @@ public class DocHiveTemplate{
 					Element eElement = (Element) nNode;
 					String outputLine = getTagValue("line", eElement);
 
-					FileWriter output = new FileWriter(destinationDirectory + File.separator + fileName_woext.substring(0,fileName.lastIndexOf("_")) + ".csv",true);
+					FileWriter output = new FileWriter(destinationDirectory + File.separator + fileName_woext.substring(0,fileName.lastIndexOf('_')) + ".csv",true);
 				    BufferedWriter bufWrite = new BufferedWriter(output);
 
 					System.out.println(destinationDirectory + File.separator + fileName_woext.substring(0,fileName.lastIndexOf("_")) + ".csv");

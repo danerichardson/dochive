@@ -29,16 +29,15 @@ public class DocHiveToolbox {
 
 	//-----------------------------------------------------
 	// Description: Separate the file specified by fileName
-	// parameter into png files stored in the directoryLocation
-	// parameter. If a directoryLocation does not exist then
-	// it will be created. Return the number of pages.
+	// parameter into png files stored in the output directory
+	// in the settings. Returns the pages produced.
 	//-----------------------------------------------------
-  	int separateDocumentPages(String sourceFile, String fileName, String woext, String directoryLocation){
+	File[] separateDocumentPages(String sourceFile, String fileName, String woext) {
 
 		// create the output directory corresponding to the file
+		File outputDirectory = new File(Settings.destinationDirectory, woext);
 		boolean status;
-		int pageCount = 0;
-		status = new File(directoryLocation + File.separator + woext).mkdir();
+		status = outputDirectory.mkdir();
         report(status);
 
         if(status) {
@@ -47,11 +46,10 @@ public class DocHiveToolbox {
 			              "-monochrome",
 			              "-density", "300",
 			              sourceFile,
-			              directoryLocation + File.separator + woext + File.separator + woext + "_%02d.png");
+			              new File(outputDirectory, woext + "_%02d.png").getPath());
 		}
-		// return the number of files in the [input\fileName] directory
-		pageCount = new File(directoryLocation + File.separator + woext).listFiles().length;
-	  	return pageCount;
+		// return the files in the [output/fileName] directory
+		return outputDirectory.listFiles();
 	}
 }
 

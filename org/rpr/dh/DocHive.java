@@ -16,17 +16,13 @@ public class DocHive{
 	//-----------------------------------------------------
     public static void main(String args[]){
 
-		String absolutePath;
-		String filePath;
-
 		// Parse command-line arguments
 		Settings.parseCommandLine(args);
 
 		// source file
 		File temp = new File(Settings.sourceFile);
 		if (temp.exists()) {
-			absolutePath = temp.getAbsolutePath();
-			filePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
+			String filePath = temp.getParentFile().getAbsolutePath();
 			System.out.println("File path: " + filePath);
 		}
 		else {
@@ -54,12 +50,12 @@ public class DocHive{
 	  	DocHiveToolbox tools = new DocHiveToolbox();
 
 		// pages in current document
-	  	int index = temp.getName().lastIndexOf('.');
 		String fileName = temp.getName();
-		String woext = temp.getName().substring(0, index);
+		int index = fileName.lastIndexOf('.');
+		String woext = fileName.substring(0, index);
 
 		long sepStartTime = System.currentTimeMillis();
-		int pageCount = tools.separateDocumentPages(Settings.sourceFile, fileName, woext, Settings.destinationDirectory);
+		File[] listOfFiles = tools.separateDocumentPages(Settings.sourceFile, fileName, woext);
 
 		long sepEndTime = System.currentTimeMillis();
 		System.out.println("Converted in " + (sepEndTime - sepStartTime)/1000 + " seconds");
@@ -73,51 +69,48 @@ public class DocHive{
 		//-------------------------------------------------
 
 	  	double rotate;
-	  	String files;
-		File folder = new File(Settings.destinationDirectory + File.separator + woext);
-	  	File[] listOfFiles = folder.listFiles();
+		File folder = new File(Settings.destinationDirectory, woext);
+		String mainOutputDirectory = folder.getPath();
 	  	boolean templateAvailable;
 
-		System.out.println("Page Count: " + pageCount);
+		System.out.println("Page Count: " + listOfFiles.length);
 
 		// only continue if pages exist
-	  	if(pageCount>0) {
+		if (listOfFiles.length > 0) {
 
 			long startTime = System.currentTimeMillis();
 
 			// loop through all the files in destinationDirectory
-			for (int i = 0; i < listOfFiles.length; i++) {
+			for (File file : listOfFiles) {
 
 				// ensure it is a file
-		  		if (listOfFiles[i].isFile()) {
+				if (file.isFile()) {
 
-		     		String afile = listOfFiles[i].getName();
+					String afile = file.getName();
 		          	if (afile.toUpperCase().endsWith(".PNG"))	{
 
 						// create the output directory corresponding to the file
 						boolean status;
-						status = new File(Settings.destinationDirectory + File.separator + woext).mkdir();
-						status = new File(Settings.destinationDirectory + File.separator + woext + File.separator + afile.substring(0, afile.lastIndexOf("."))).mkdir();
+						File pageOutputDirectory = new File(folder, afile.substring(0, afile.lastIndexOf('.')));
+						status = pageOutputDirectory.mkdir();
 
-						String curLocation = Settings.destinationDirectory + File.separator + woext + File.separator + afile;
-						String newLocation = Settings.destinationDirectory + File.separator + woext + File.separator + afile.substring(0, afile.lastIndexOf(".")) + File.separator + afile;
-
-						File currentFile = new File(curLocation);
-						currentFile.renameTo(new File(newLocation));
+						File currentFile = new File(folder, afile);
+						File newFile = new File(pageOutputDirectory, afile);
+						currentFile.renameTo(newFile);
 
 						// instanciate template class
 						DocHiveTemplate dhTemplate = new DocHiveTemplate(Settings.templateDirectory);
 
 						// auto rotate file
-					    if(Settings.bAutoAlign) rotate = dhTemplate.autoAlignRotate(afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
+						if(Settings.bAutoAlign) rotate = dhTemplate.autoAlignRotate(afile, mainOutputDirectory);
 
 						// trim/normalize form
-					    dhTemplate.normalizeByTrimming(afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
+						dhTemplate.normalizeByTrimming(afile, mainOutputDirectory);
 						// dhTemplate.determinePagePointOfAlignment(afile, Settings.destinationDirectory);
 
 						// determine if a template exists for the file
 					    templateAvailable = false;
-					    templateAvailable = dhTemplate.templateExistFor(afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
+						templateAvailable = dhTemplate.templateExistFor(afile, mainOutputDirectory);
 
 
 						System.out.println("-------------------------------------------------------------------");
@@ -133,10 +126,10 @@ public class DocHive{
 							System.out.println("Template ["+templateName+"] selected for ["+afile+"]");
 
 							// use the template to extract pieces
-							dhTemplate.extractWithTemplate(templateName, afile, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
+							dhTemplate.extractWithTemplate(templateName, afile, mainOutputDirectory);
 
 							// convert the pieces into a csv file
-							dhTemplate.transformWithTemplate(templateName, afile, Settings.bOptionalIdentifier, Settings.optionalIdentifier, Settings.destinationDirectory + File.separator + fileName.substring(0, fileName.lastIndexOf(".")));
+							dhTemplate.transformWithTemplate(templateName, afile, Settings.bOptionalIdentifier, Settings.optionalIdentifier, mainOutputDirectory);
 
 					    }
 					    else {
