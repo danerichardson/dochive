@@ -142,20 +142,12 @@ public class DocHiveTemplate{
 								e.printStackTrace();
 				  			}
 
-				  			Boolean searching = true;
 							String[] requirements = myRequirements.split("#");
 							for (String requirement : requirements) {
-								if(searching) {
-									if(requirement.equals(accumulate.trim())) {
-										templateName = file.getName();
-										searching=false;
-										templateIdentified = true;
-										return templateIdentified;
-							  	  	}
-									else {
-								  	  	templateIdentified = false;
-										searching=true;
-									}
+								if(requirement.equals(accumulate.trim())) {
+									templateName = file.getName();
+									templateIdentified = true;
+									return templateIdentified;
 								}
     			  			}
 						}
