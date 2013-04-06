@@ -129,7 +129,7 @@ public class DocHive{
 							dhTemplate.extractWithTemplate(templateName, afile, mainOutputDirectory);
 
 							// convert the pieces into a csv file
-							dhTemplate.transformWithTemplate(templateName, afile, Settings.bOptionalIdentifier, Settings.optionalIdentifier, mainOutputDirectory);
+							dhTemplate.transformWithTemplate(templateName, afile, mainOutputDirectory);
 
 					    }
 					    else {

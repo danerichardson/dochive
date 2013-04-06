@@ -17,11 +17,9 @@ class Settings {
 	// Template location
 	public static String templateDirectory = "templates";
 	// Template set
-	public static String optionalTemplateSet = "";
-	public static boolean bOptionalTemplateSet = false;
+	public static String optionalTemplateSet = null;
 	// Additional identifier
-	public static String optionalIdentifier = "";
-	public static boolean bOptionalIdentifier = false;
+	public static String optionalIdentifier = null;
 
 	// Paths to external programs that are run by DocHive
 	public static enum Programs {
@@ -116,7 +114,6 @@ class Settings {
 			// '*' to set default
 			if (!args[5].equals("*")) {
 				optionalTemplateSet = args[5];
-				bOptionalTemplateSet = true;
 			}
 		}
 
@@ -125,7 +122,6 @@ class Settings {
 			// '*' to set default
 			if (!args[6].equals("*")) {
 				optionalIdentifier = args[6];
-				bOptionalIdentifier = true;
 			}
 		}
 	}

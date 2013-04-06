@@ -409,7 +409,7 @@ public class DocHiveTemplate{
 	// Description: Using the specified template, create
 	// csv records corresponding to the output xml criteria.
 	//-----------------------------------------------------
-  	void transformWithTemplate(String templateName, String fileName, Boolean bOptionalIdentifier, String optionalIdentifier, String destinationDirectory){
+	void transformWithTemplate(String templateName, String fileName, String destinationDirectory) {
 
 		System.out.println("fileName = " + fileName);
 		String fileName_woext = fileName.substring(0,fileName.lastIndexOf('.'));
@@ -438,15 +438,15 @@ public class DocHiveTemplate{
 
 					System.out.println(destinationDirectory + File.separator + fileName_woext.substring(0,fileName.lastIndexOf("_")) + ".csv");
 
-					if(bOptionalIdentifier) {
-						bufWrite.write("\""+optionalIdentifier+"\"");
+					if(Settings.optionalIdentifier != null) {
+						bufWrite.write("\""+Settings.optionalIdentifier+"\"");
 					}
 
 
 					String[] outputItems = outputLine.split("#");
 					for (String outputItem : outputItems)
 					{
-						if((temp==0)&&(bOptionalIdentifier==false)) {
+						if ((temp==0) && (Settings.optionalIdentifier==null)) {
 							bufWrite.write("\""+interpretText(destinationDirectory, fileName_woext, outputItem)+"\"");
 						}
 						else {
