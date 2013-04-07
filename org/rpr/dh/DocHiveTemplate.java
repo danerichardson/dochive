@@ -126,7 +126,6 @@ public class DocHiveTemplate{
 								BufferedReader bufRead = new BufferedReader(input);
 
 								line = bufRead.readLine();
-								accumulate = "";
 
 								while (line != null){
 									accumulate+=line;
@@ -136,9 +135,7 @@ public class DocHiveTemplate{
 								bufRead.close();
 								input.close();
 
-							}catch (ArrayIndexOutOfBoundsException e){
-								System.out.println("Usage: java ReadFile filename\n");
-							}catch (Exception e){
+							} catch (IOException e) {
 								e.printStackTrace();
 				  			}
 
@@ -303,9 +300,7 @@ public class DocHiveTemplate{
 			reader.close();
 		  	return accumulate;
 
-		}catch (ArrayIndexOutOfBoundsException e){
-			e.printStackTrace();
-	    }catch(IOException e){
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		return "";
