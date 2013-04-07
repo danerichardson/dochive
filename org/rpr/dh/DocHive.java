@@ -109,7 +109,6 @@ public class DocHive{
 						// dhTemplate.determinePagePointOfAlignment(afile, Settings.destinationDirectory);
 
 						// determine if a template exists for the file
-					    templateAvailable = false;
 						templateAvailable = dhTemplate.templateExistFor(afile, mainOutputDirectory);
 
 

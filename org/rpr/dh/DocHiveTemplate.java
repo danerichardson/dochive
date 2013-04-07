@@ -334,7 +334,7 @@ public class DocHiveTemplate{
 
 			NodeList nList = doc.getElementsByTagName("section");
 
-			Node nNode = nList.item(0);
+			Node nNode;
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
 				nNode = nList.item(temp);
@@ -347,7 +347,6 @@ public class DocHiveTemplate{
 					String myWidth = getTagValue("width", eElement);
 					String myHeight = getTagValue("height", eElement);
 					String mySuffix = getTagValue("suffix", eElement);
-					String myType = getTagValue("type", eElement);
 
 					intX      = Integer.parseInt(myX);
 					intY      = Integer.parseInt(myY);
