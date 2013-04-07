@@ -245,8 +245,6 @@ public class DocHiveTemplate{
 			File file = new File(destinationDirectory + File.separator + fileName_woext + File.separator + fileName_woext + "_" + suffix + ".txt");
 
 			reader = new Scanner(new FileReader(file));
-			String text = null;
-			boolean check = true;
 
 			if (dataType == 1){ 		// multiline
 				while(reader.hasNextLine()){
@@ -255,37 +253,26 @@ public class DocHiveTemplate{
 				accumulate = accumulate.trim();
 			}
 			else if(dataType == 2){ 	// address
-
-				String line1	= null;
-				String line2	= null;
-				String line31	= null;
-				String line32	= null;
-				String line33	= null;
-
 				if(reader.hasNextLine()) {
-					line1 = reader.nextLine().trim();
-					accumulate = line1;
+					accumulate = reader.nextLine().trim();
 				}
 				if(reader.hasNextLine()) {
-					line2 = reader.nextLine().trim();
-					accumulate += ","+line2;
-
+					accumulate += ","+reader.nextLine().trim();
 				}
 				if(reader.hasNextLine()) {
-					String temp = reader.nextLine().trim();
-					int index = temp.indexOf(",");
-					line31 = temp.substring(0,index);
+					line = reader.nextLine().trim();
+					int index = line.indexOf(",");
+					String line31 = line.substring(0,index);
 
 					int i = 0;
-					int hi = temp.length()-index;
-					char[] chars = temp.toCharArray();
+					int hi = line.length()-index;
 					for(i=hi ; i>0 ; i--){
-						if(Character.isDigit(chars[i]))
+						if(Character.isDigit(line.charAt(i)))
 							break;
 					}
 
-					line32 = temp.substring(index+1,i);
-					line33 = temp.substring(i+1,temp.length()-1);
+					String line32 = line.substring(index+1,i);
+					String line33 = line.substring(i+1,line.length()-1);
 
 					accumulate += ","+line31+","+line32+","+line33;
 				}
