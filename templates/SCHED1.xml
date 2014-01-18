@@ -26,25 +26,32 @@
   </condition>
   
   <section>
-    <x>29</x>
-    <y>205</y>
-    <width>1593</width>
-    <height>91</height>
+    <x>28</x>
+    <y>390</y>
+    <width>950</width>
+    <height>133</height>
     <suffix>01</suffix>
     <type>1</type>
   </section>
   <section>
-      <x>109</x>
-      <y>205</y>
-      <width>1593</width>
-      <height>91</height>
+      <x>1028</x>
+      <y>390</y>
+      <width>950</width>
+      <height>133</height>
       <suffix>02</suffix>
+      <type>1</type>
+  </section>
+  <section>
+      <x>1998</x>
+      <y>390</y>
+      <width>950</width>
+      <height>133</height>
+      <suffix>03</suffix>
       <type>1</type>
   </section>
   
   <output>
-    <line>SCHED1</line>
-    <line>01#02</line>
+    <line>01#02#03</line>
   </output>
   
 </template>
