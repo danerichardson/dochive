@@ -39,7 +39,7 @@ public class DocHiveTemplate{
 		int intOriginY = 0;
 
 		// from template
-		int intX      = 0;
+	int intX      = 0;
 		int intY      = 0;
 		int intWidth  = 0;
 		int intHeight = 0;
@@ -64,7 +64,7 @@ public class DocHiveTemplate{
 
 			for (File file : listOfFiles) {
 
-				if (file.isFile()) {
+				if (file.isFile() && file.getName().endsWith(".xml")) {
 
 					templateName = "";
 

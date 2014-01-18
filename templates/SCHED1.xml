@@ -1,0 +1,50 @@
+<?xml version="1.0" ?> 
+<!DOCTYPE template [
+  <!ELEMENT condition        (action,x,y,height,width,suffix,required)>
+  <!ELEMENT section          (x,y,height,width,suffix,type)>
+  <!ELEMENT output           (line)>
+  <!ELEMENT action           (#PCDATA)>
+  <!ELEMENT x                (#PCDATA)>
+  <!ELEMENT y                (#PCDATA)>
+  <!ELEMENT width            (#PCDATA)>
+  <!ELEMENT height           (#PCDATA)>
+  <!ELEMENT suffix           (#PCDATA)>
+  <!ELEMENT type             (#PCDATA)>
+  <!ELEMENT required         (#PCDATA)>
+  <!ELEMENT line     	     (#PCDATA)>
+]>
+<template title="SCHED1">
+
+  <condition>
+    <action>1</action>
+    <x>30</x>
+    <y>0</y>
+    <width>1300</width>
+    <height>150</height>
+    <suffix>cfi1</suffix>
+    <required>SCHEDULE I - EARNED INCOME</required>
+  </condition>
+  
+  <section>
+    <x>29</x>
+    <y>205</y>
+    <width>1593</width>
+    <height>91</height>
+    <suffix>01</suffix>
+    <type>1</type>
+  </section>
+  <section>
+      <x>109</x>
+      <y>205</y>
+      <width>1593</width>
+      <height>91</height>
+      <suffix>02</suffix>
+      <type>1</type>
+  </section>
+  
+  <output>
+    <line>SCHED1</line>
+    <line>01#02</line>
+  </output>
+  
+</template>
