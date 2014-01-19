@@ -326,11 +326,14 @@ public class DocHiveTemplate {
 
             NodeList nList = doc.getElementsByTagName("section");
 
+            int iSuffix = 0;
+
             Node nNode;
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    boolean done = false;
 
                     Element eElement = (Element) nNode;
 
@@ -345,29 +348,35 @@ public class DocHiveTemplate {
                     intWidth = Integer.parseInt(myWidth);
                     intHeight = Integer.parseInt(myHeight);
 
-                    viaTemplateX = intX - (intOriginX - pageX);
-                    viaTemplateY = intY - (intOriginY - pageY);
-                    viaTemplatePlusWidth = viaTemplateX + intWidth;
-                    viaTemplatePlusHeight = viaTemplateY + intHeight;
+                    while (!done) {
+                        viaTemplateX = intX - (intOriginX - pageX);
+                        viaTemplateY = intY - (intOriginY - pageY);
+                        viaTemplatePlusWidth = viaTemplateX + intWidth;
+                        viaTemplatePlusHeight = viaTemplateY + intHeight;
 
-                    Spawn.execute(Settings.Programs.CONVERT.path(),
-                            pathPlusFileName_woext + "_trim.png",
-                            "-crop", String.format("%dx%d+%d+%d", intWidth, intHeight, viaTemplateX, viaTemplateY),
-                            "+repage",
-                            pathPlusFileName_woext + "_" + mySuffix + ".png");
-                    Spawn.execute(Settings.Programs.CONVERT.path(),
-                            pathPlusFileName_woext + "_trim.png",
-                            "-fill", "none",
-                            "-stroke", "red",
-                            "-strokewidth", "3",
-                            "-draw", String.format("rectangle %d,%d %d,%d",
-                                    viaTemplateX, viaTemplateY,
-                                    viaTemplatePlusWidth, viaTemplatePlusHeight),
-                            "+repage",
-                            pathPlusFileName_woext + "_draw.png");
-                    Spawn.execute(Settings.Programs.TESSERACT.path(),
-                            pathPlusFileName_woext + "_" + mySuffix + ".png",
-                            pathPlusFileName_woext + "_" + mySuffix);
+                        Spawn.execute(Settings.Programs.CONVERT.path(), pathPlusFileName_woext + "_trim.png", "-crop",
+                                String.format("%dx%d+%d+%d", intWidth, intHeight, viaTemplateX, viaTemplateY),
+                                "+repage", pathPlusFileName_woext + "_0" + iSuffix + ".png");
+                        Spawn.execute(Settings.Programs.CONVERT.path(), pathPlusFileName_woext + "_trim.png", "-fill",
+                                "none", "-stroke", "red", "-strokewidth", "3", "-draw", String.format(
+                                        "rectangle %d,%d %d,%d", viaTemplateX, viaTemplateY, viaTemplatePlusWidth,
+                                        viaTemplatePlusHeight), "+repage", pathPlusFileName_woext + "_draw.png");
+                        Spawn.execute(Settings.Programs.TESSERACT.path(), pathPlusFileName_woext + "_0" + iSuffix
+                                + ".png", pathPlusFileName_woext + "_0" + iSuffix);
+                        File file = new File(pathPlusFileName_woext + "_0" + iSuffix + ".txt");
+                        if (file.exists()) {
+                            BufferedReader br = new BufferedReader(new FileReader(file));
+                            String line = br.readLine();
+                            if (line == null || line.isEmpty()) {
+                                done = true;
+                            } else {
+                                intY += intHeight;
+                            }
+                            iSuffix++;
+                            br.close();
+                        }
+
+                    }
                 }
             }
 
